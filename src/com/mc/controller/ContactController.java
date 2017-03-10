@@ -24,7 +24,7 @@ public class ContactController extends Controller {
 		int size = getParaToInt(1);
 		List<Contacts> contacts = getContactsLimitSize(currPage,size);
 		User user = (User)getSession().getAttribute("user");
-		List<Contacts> list = getContacts(user.getId());
+		List<Contacts> list = getContactsByUid(user.getId());
 		int count = list.size();
 		int total = 0;
 		if(size!=0){
@@ -43,7 +43,12 @@ public class ContactController extends Controller {
 		render("contacts.jsp");
 	}
 	
-	public static List<Contacts> getContacts(int uid){
+	/**
+	 * 通过用户ID获取联系人信息
+	 * @param uid
+	 * @return
+	 */
+	public static List<Contacts> getContactsByUid(int uid){
 		return Contacts.dao.find("select * from contacts where uid='"+uid+"' order by name asc");
 	}
 	
